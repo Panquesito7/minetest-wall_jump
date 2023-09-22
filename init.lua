@@ -73,19 +73,23 @@ player_api.register_model("character_wj.b3d", {
 		walk_mine = {x = 200, y = 219},
 		sit       = {x = 81,  y = 160, eye_height = 0.8, override_local = true,
 			collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.0, 0.3}},
-        slide_right    = {x = 221, y = 221, override_local = true,
+        slide_right_animated    = {x = 221, y = 235, override_local = true,
             collisionbox = {-0.42, 0.0, -0.42, 0.42, 1.7, 0.42}},
-        slide_left    = {x = 222, y = 222, override_local = true,
+        slide_left_animated    = {x = 236, y = 250, override_local = true,
             collisionbox = {-0.42, 0.0, -0.42, 0.42, 1.7, 0.42}},
-        --stick_left
-        --stick_right
-        --wall_jump
+        slide_right = {x = 235, y = 235, override_local = true,
+            collisionbox = {-0.42, 0.0, -0.42, 0.42, 1.7, 0.42}},
+        slide_left = {x = 250, y = 250, override_local = true, 
+            collisionbox = {-0.42, 0.0, -0.42, 0.42, 1.7, 0.42}},
 	},
 })
 
 minetest.register_on_joinplayer(function(player)
     player_api.set_model(player, "character_wj.b3d")
 end)
+
+local play_animated_right = { } -- Whether to play the right sliding animation or not.
+local play_animated_left = { } -- Whether to play the left sliding animation or not.
 
 --------------------
 -- Realistic mode --
@@ -131,6 +135,14 @@ local function initialize(player)
 
     if sounds.slide_has_played[player:get_player_name()] == nil then
         sounds.slide_has_played[player:get_player_name()] = false
+    end
+
+    if play_animated_right[player] == nil then
+        play_animated_right[player] = false
+    end
+
+    if play_animated_left[player] == nil then
+        play_animated_left[player] = false
     end
 end
 
@@ -401,18 +413,54 @@ local function player_slide(player, dtime)
                     particle_def.maxpos.x = particle_def.maxpos.x - 0.3
 
                     if player:get_look_horizontal() > 0 and player:get_look_horizontal() < 2 or player:get_look_horizontal() > 4.8 and player:get_look_horizontal() < 6.280 then
-                        player_api.set_animation(player, "slide_right")
+                        if play_animated_right[player] == false then
+                            player_api.set_animation(player, "slide_right_animated")
+
+                            minetest.after(0.4, function()
+                                play_animated_right[player] = true
+                                player_api.set_animation(player, "slide_right")
+                            end)
+                        else
+                            player_api.set_animation(player, "slide_right")
+                        end
                     else
-                        player_api.set_animation(player, "slide_left")
+                        if play_animated_left[player] == false then
+                            player_api.set_animation(player, "slide_left_animated")
+
+                            minetest.after(0.4, function()
+                                play_animated_left[player] = true
+                                player_api.set_animation(player, "slide_left")
+                            end)
+                        else
+                            player_api.set_animation(player, "slide_left")
+                        end
                     end
                 else
                     particle_def.minpos.x = particle_def.minpos.x + 0.3
                     particle_def.maxpos.x = particle_def.maxpos.x + 0.3
 
                     if player:get_look_horizontal() > 0 and player:get_look_horizontal() < 2 or player:get_look_horizontal() > 4.8 and player:get_look_horizontal() < 6.280 then
-                        player_api.set_animation(player, "slide_left")
+                        if play_animated_left[player] == false then
+                            player_api.set_animation(player, "slide_left_animated")
+
+                            minetest.after(0.4, function()
+                                play_animated_left[player] = true
+                                player_api.set_animation(player, "slide_left")
+                            end)
+                        else
+                            player_api.set_animation(player, "slide_left")
+                        end
                     else
-                        player_api.set_animation(player, "slide_right")
+                        if play_animated_right[player] == false then
+                            player_api.set_animation(player, "slide_right_animated")
+
+                            minetest.after(0.4, function()
+                                play_animated_right[player] = true
+                                player_api.set_animation(player, "slide_right")
+                            end)
+                        else
+                            player_api.set_animation(player, "slide_right")
+                        end
                     end
                 end
 
@@ -426,9 +474,27 @@ local function player_slide(player, dtime)
 
                     local angle = player:get_look_horizontal()
                     if angle > math.pi - 0.4 then
-                        player_api.set_animation(player, "slide_left")
+                        if play_animated_left[player] == false then
+                            player_api.set_animation(player, "slide_left_animated")
+
+                            minetest.after(0.4, function()
+                                play_animated_left[player] = true
+                                player_api.set_animation(player, "slide_left")
+                            end)
+                        else
+                            player_api.set_animation(player, "slide_left")
+                        end
                     else
-                        player_api.set_animation(player, "slide_right")
+                        if play_animated_right[player] == false then
+                            player_api.set_animation(player, "slide_right_animated")
+
+                            minetest.after(0.4, function()
+                                play_animated_right[player] = true
+                                player_api.set_animation(player, "slide_right")
+                            end)
+                        else
+                            player_api.set_animation(player, "slide_right")
+                        end
                     end
                 else
                     particle_def.minpos.z = particle_def.minpos.z + 0.3
@@ -436,9 +502,27 @@ local function player_slide(player, dtime)
 
                     local angle = player:get_look_horizontal()
                     if angle > math.pi + 0.4 then
-                        player_api.set_animation(player, "slide_right")
+                        if play_animated_right[player] == false then
+                            player_api.set_animation(player, "slide_right_animated")
+
+                            minetest.after(0.4, function()
+                                play_animated_right[player] = true
+                                player_api.set_animation(player, "slide_right")
+                            end)
+                        else
+                            player_api.set_animation(player, "slide_right")
+                        end
                     else
-                        player_api.set_animation(player, "slide_left")
+                        if play_animated_left[player] == false then
+                            player_api.set_animation(player, "slide_left_animated")
+
+                            minetest.after(0.4, function()
+                                play_animated_left[player] = true
+                                player_api.set_animation(player, "slide_left")
+                            end)
+                        else
+                            player_api.set_animation(player, "slide_left")
+                        end
                     end
                 end
 
@@ -507,6 +591,9 @@ local function player_jump(player, dtime)
                 -- Play the `player_jump` sound.
                 -- This is originally played on each jump.
                 minetest.sound_play({ name = "player_jump" }, { pos = player:get_pos(), to_player = player:get_player_name() })
+
+                play_animated_right[player] = false
+                play_animated_left[player] = false
 
                 local node_pos, node_dir, name = is_player_on_block(player, true)
                 local def = minetest.registered_nodes[name]
