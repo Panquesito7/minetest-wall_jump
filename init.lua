@@ -758,6 +758,9 @@ local function wall_jump(player, dtime)
 
             sounds.sticky_has_played[player:get_player_name()] = false
             sounds.slide_has_played[player:get_player_name()] = false
+
+            play_animated_right[player] = false
+            play_animated_left[player] = false
         end
 
         player:set_physics_override({ speed = 1 })
