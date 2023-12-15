@@ -1,5 +1,10 @@
 # Minetest Wall Jump
 
+> **Note**
+>
+> The mod is still WIP and is still missing a lot of stuff, cleanup, and other things.\
+> However, it should be stable and playable without any major issues. Thanks for testing!
+
 Allows the player to perform multiple wall jumps on Minetest!\
 The mod has a variety of settings and customizations, from the number of wall jumps to configuring all the values for specific nodes or groups, which allows you to create a unique experience for your server. You can also configure specific armors to have different physics and values.
 
@@ -8,11 +13,15 @@ The mod has a variety of settings and customizations, from the number of wall ju
 
 ## Settings
 
+TODO: Add a list of settings found in settingtypes.txt here
+
 <!-- Add a list of settings found in settingtypes.txt here -->
 
 To configure the Realistic Mode (RLM), check out the `realistic_mode.lua` file.
 
 ### Configuring the RLM mode
+
+TODO: Add a guide on how to configure the RLM mode
 
 <!-- Add a guide on how to configure the RLM mode -->
 
@@ -44,3 +53,5 @@ For further information or help, see:\
 - Add an in-game RLM configuration menu (?).
 - Adjust the readme.
 - Update the sounds to have higher quality.
+- Create the jump and stick to wall models (#2, in progress).
+- Clean up and tweak the code.

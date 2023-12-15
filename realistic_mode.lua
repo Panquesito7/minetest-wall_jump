@@ -80,7 +80,7 @@ wall_jump.realistic_mode.nodes = { }
 -- 3D Armor settings.
 wall_jump.realistic_mode.armor = { }
 
-local realistic_mode = minetest.settings:get_bool("wall_jump.rlm") or true -- FALSE BY DEFAULT!
+local realistic_mode = minetest.settings:get_bool("wall_jump.rlm") or false
 local mode_only = minetest.settings:get("wall_jump.rlm.only_mode") or "both"
 
 local keep_def_settings = minetest.settings:get_bool("wall_jump.rlm.keep_default_settings") or true

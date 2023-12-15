@@ -79,7 +79,7 @@ player_api.register_model("character_wj.b3d", {
             collisionbox = {-0.42, 0.0, -0.42, 0.42, 1.7, 0.42}},
         slide_right = {x = 235, y = 235, override_local = true,
             collisionbox = {-0.42, 0.0, -0.42, 0.42, 1.7, 0.42}},
-        slide_left = {x = 250, y = 250, override_local = true, 
+        slide_left = {x = 250, y = 250, override_local = true,
             collisionbox = {-0.42, 0.0, -0.42, 0.42, 1.7, 0.42}},
 	},
 })
@@ -163,7 +163,6 @@ local function is_player_on_block(player, get_data, y_vel)
     }
 
     local closest_node_pos, closest_offset, closest_node = nil, nil, nil
-    local closest_distance = math.huge
 
     for _, offset in pairs(offsets) do
         local node_pos = vector.add(pos, offset)
@@ -174,8 +173,7 @@ local function is_player_on_block(player, get_data, y_vel)
         if node_def and node_def.walkable then
             if get_data then
                 local distance = vector.distance(pos, node_pos)
-                if distance < closest_distance then
-                    closest_distance = distance
+                if distance < math.huge then
                     closest_node_pos = node_pos
                     closest_offset = offset
                     closest_node = node.name
@@ -598,8 +596,6 @@ local function player_jump(player, dtime)
                 local node_pos, node_dir, name = is_player_on_block(player, true)
                 local def = minetest.registered_nodes[name]
                 if node_pos then
-                    pos = player:get_pos()
-
                     -- Particle effects.
                     local particle_def = {
                         amount = 1,
