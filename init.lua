@@ -338,7 +338,7 @@ local function player_slide(player, dtime)
     end
 
     if vel.y < 0 then
-        local node_pos, node_dir, name = is_player_on_block(player, true, 1.9)
+        local node_pos, node_dir, name = is_player_on_block(player, true, 1.7)
         local def = minetest.registered_nodes[name]
 
         if node and node_def and node.name == "air" or node_def.drawtype == "plantlike" then
@@ -385,8 +385,8 @@ local function player_slide(player, dtime)
             local particle_def = {
                 amount = 1,
                 time = 0.1,
-                minpos = vector.new(node_pos.x, player:get_pos().y + 1.9, node_pos.z),
-                maxpos = vector.new(node_pos.x, player:get_pos().y + 1.9, node_pos.z),
+                minpos = vector.new(node_pos.x, player:get_pos().y + 1.7, node_pos.z),
+                maxpos = vector.new(node_pos.x, player:get_pos().y + 1.7, node_pos.z),
                 minvel = vector.new(0.1, 0.1, 0.1),
                 maxvel = vector.new(0.1, 0.1, 0.1),
                 minacc = vector.new(),
