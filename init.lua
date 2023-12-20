@@ -732,7 +732,9 @@ end
 --- @return nil
 local function wall_jump(player, dtime)
     local node = minetest.get_node(vector.new(player:get_pos().x, player:get_pos().y - 0.3, player:get_pos().z))
-    if node and node.name ~= "air" then
+    local node_def = node and minetest.registered_nodes[node.name]
+
+    if node and node_def and node.name ~= "air" and node_def.drawtype ~= "plantlike" then
         minetest.sound_stop(sounds.slide_sound_id[player:get_player_name()] or 0)
     end
 
