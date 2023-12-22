@@ -59,30 +59,23 @@ local wall_jump_amount = tonumber(minetest.settings:get("wall_jump.wall_jump_amo
 -- Models --
 -------------
 
+-- Take the original model and add the new animations for full compatibility.
+local og_model = player_api.registered_models["character.b3d"]
+
+og_model.animations.slide_right_animated = {x = 221, y = 235, override_local = true,
+    collisionbox = {-0.42, 0.0, -0.42, 0.42, 1.7, 0.42}}
+og_model.animations.slide_left_animated = {x = 236, y = 250, override_local = true,
+    collisionbox = {-0.42, 0.0, -0.42, 0.42, 1.7, 0.42}}
+-- Usually, these should be called with `player:set_properties`,
+-- but that'd also involve modifying the collisionbox, so this is technically faster.
+og_model.animations.slide_right = {x = 235, y = 235, override_local = true,
+    collisionbox = {-0.42, 0.0, -0.42, 0.42, 1.7, 0.42}}
+og_model.animations.slide_left = {x = 250, y = 250, override_local = true,
+    collisionbox = {-0.42, 0.0, -0.42, 0.42, 1.7, 0.42}}
+
 -- Currently supports vanilla model only.
 -- 3D Armor and SkinsDB support will be added soon.
-player_api.register_model("character_wj.b3d", {
-	animation_speed = 30,
-	textures = {"character.png"},
-	animations = {
-		stand     = {x = 0,   y = 79},
-		lay       = {x = 162, y = 166, eye_height = 0.3, override_local = true,
-			collisionbox = {-0.6, 0.0, -0.6, 0.6, 0.3, 0.6}},
-		walk      = {x = 168, y = 187},
-		mine      = {x = 189, y = 198},
-		walk_mine = {x = 200, y = 219},
-		sit       = {x = 81,  y = 160, eye_height = 0.8, override_local = true,
-			collisionbox = {-0.3, 0.0, -0.3, 0.3, 1.0, 0.3}},
-        slide_right_animated    = {x = 221, y = 235, override_local = true,
-            collisionbox = {-0.42, 0.0, -0.42, 0.42, 1.7, 0.42}},
-        slide_left_animated    = {x = 236, y = 250, override_local = true,
-            collisionbox = {-0.42, 0.0, -0.42, 0.42, 1.7, 0.42}},
-        slide_right = {x = 235, y = 235, override_local = true,
-            collisionbox = {-0.42, 0.0, -0.42, 0.42, 1.7, 0.42}},
-        slide_left = {x = 250, y = 250, override_local = true,
-            collisionbox = {-0.42, 0.0, -0.42, 0.42, 1.7, 0.42}},
-	},
-})
+player_api.register_model("character_wj.b3d", og_model)
 
 minetest.register_on_joinplayer(function(player)
     player_api.set_model(player, "character_wj.b3d")
