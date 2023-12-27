@@ -55,3 +55,7 @@ For further information or help, see:\
 - Update the sounds to have higher quality.
 - Create the jump and stick to wall models (#2, in progress).
 - Clean up and tweak the code.
+
+## License
+
+Refer to [`LICENSE.md`](LICENSE.md) for full information.
